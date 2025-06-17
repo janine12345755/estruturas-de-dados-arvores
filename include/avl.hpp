@@ -226,7 +226,11 @@ class AVL {
 
 template <class T>
 int AVL<T>::height(TreeNode* node) const {
-    return node ? node->height : -1;
+    if (node != nullptr) {
+    return node->height;
+    } else {
+        return 0;
+    }
 }
 
 template <class T>
@@ -235,10 +239,8 @@ void AVL<T>::balance(TreeNode*& node) {
 
     int balanceFactor = height(node->left) - height(node->right);
 
-    // Rotação à direita
     if (balanceFactor > 1) {
         if (height(node->left->right) > height(node->left->left)) {
-            // Rotação dupla à esquerda-direita
             TreeNode* leftChild = node->left;
             TreeNode* leftRightChild = leftChild->right;
 
@@ -246,21 +248,18 @@ void AVL<T>::balance(TreeNode*& node) {
             leftRightChild->left = leftChild;
             node->left = leftRightChild;
         }
-        // Rotação simples à direita
         TreeNode* leftChild = node->left;
         node->left = leftChild->right;
         leftChild->right = node;
 
-        // Atualiza alturas
         node->height = std::max(height(node->left), height(node->right)) + 1;
         leftChild->height = std::max(height(leftChild->left), height(leftChild->right)) + 1;
 
         node = leftChild;
     }
-    // Rotação à esquerda
+    
     else if (balanceFactor < -1) {
         if (height(node->right->left) > height(node->right->right)) {
-            // Rotação dupla à direita-esquerda
             TreeNode* rightChild = node->right;
             TreeNode* rightLeftChild = rightChild->left;
 
@@ -268,12 +267,10 @@ void AVL<T>::balance(TreeNode*& node) {
             rightLeftChild->right = rightChild;
             node->right = rightLeftChild;
         }
-        // Rotação simples à esquerda
         TreeNode* rightChild = node->right;
         node->right = rightChild->left;
         rightChild->left = node;
 
-        // Atualiza alturas
         node->height = std::max(height(node->left), height(node->right)) + 1;
         rightChild->height = std::max(height(rightChild->left), height(rightChild->right)) + 1;
 
@@ -337,7 +334,8 @@ bool AVL<T>::insert(TreeNode*& node, const T& value) {
         node = new TreeNode(value);
         return true;
     }
-    if (value == node->data) return false; // valor já existe
+    if (value == node->data) 
+    return false; 
 
     bool inserted = false;
     if (value < node->data) {
@@ -363,7 +361,8 @@ bool AVL<T>::contain(const TreeNode* const node, const T& value) const {
 
 template <class T>
 bool AVL<T>::remove(TreeNode*& node, const T& value) {
-    if (!node) return false;
+    if (!node) 
+    return false;
 
     bool removed = false;
     if (value < node->data) {

@@ -1,6 +1,6 @@
 #pragma once
 #include "bst.hpp"
-#include "stdexcept"
+#include <stdexcept>
 
 /**
  * @brief Classe que representa um Mapa Associativo (Map).
@@ -41,7 +41,7 @@ class Map {
      */
     bool operator<(const Pair& other) const {
       // Implementação crucial: deve comparar APENAS as chaves.
-      return key > other.key;
+      return key < other.key;
     }
   };
 
@@ -108,7 +108,7 @@ template <class K, class V>
 const V& Map<K, V>::operator[](const K& key) const {
   typename BST<Pair>::TreeNode* node = data.find_node(Pair(key));
   if (node == nullptr) {
-      throw std::runtime_error("Chave não encontrada no Map");
+      throw std::out_of_range("chave não encontrada no Map");
   }
   return node->data.value;
 }

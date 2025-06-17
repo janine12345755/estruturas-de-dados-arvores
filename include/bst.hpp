@@ -260,14 +260,14 @@ bool BST<T>::insert(TreeNode*& node, const T& value) {
     } else if (node->data < value) {
         return insert(node->right, value);
     } else {
-        // valor já existe
         return false;
     }
 }
 
 template <class T>
 bool BST<T>::contain(const TreeNode* const node, const T& value) const {
-    if (node == nullptr) return false;
+    if (node == nullptr) 
+     return false;
 
     if (value < node->data) {
         return contain(node->left, value);
@@ -280,14 +280,14 @@ bool BST<T>::contain(const TreeNode* const node, const T& value) const {
 
 template <class T>
 bool BST<T>::remove(TreeNode*& node, const T& value) {
-    if (node == nullptr) return false;
+    if (node == nullptr) 
+    return false;
 
     if (value < node->data) {
         return remove(node->left, value);
     } else if (node->data < value) {
         return remove(node->right, value);
     } else {
-        // Encontrou o nó a ser removido
         if (node->left == nullptr && node->right == nullptr) {
             delete node;
             node = nullptr;
@@ -304,7 +304,6 @@ bool BST<T>::remove(TreeNode*& node, const T& value) {
             toDelete->right = nullptr;
             delete toDelete;
         } else {
-            // Nó com dois filhos: substituir pelo mínimo da subárvore direita
             TreeNode* successor = node->right->min();
             node->data = successor->data;
             return remove(node->right, successor->data);
